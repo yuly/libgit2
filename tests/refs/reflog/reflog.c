@@ -475,7 +475,7 @@ void test_refs_reflog_reflog__show_merge_for_merge_commits(void)
 
 	cl_git_pass(git_commit_tree(&tree, b1_commit));
 
-	cl_git_pass(git_commit_create(&merge_commit_oid,
+	cl_git_pass(git_commit_create_on(&merge_commit_oid,
 		g_repo, "HEAD", s, s, NULL,
 		"Merge commit", tree,
 		2, (const struct git_commit **) parent_commits));
