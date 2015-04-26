@@ -12,7 +12,18 @@ v0.26 + 1
   to any repository (and does not apply configuration like 'insteadof' rules).
   This is mostly useful for e.g. emulating `git ls-remote` behavior.
 
+* `git_commit_create_on()` takes on the role which
+  `git_commit_create()` had when provided a reference name to
+  update. `git_commit_create_on_head()` always updates the current
+  branch.
+
+* `git_commit_create_fromstate()` is a variant of the commit creation
+  function which behaves closer to `git-commit` by taking the parents
+  and tree from the current branch and the index.
+
 ### API removals
+
+* `git_commit_create()` has been renamed to `git_commit_create_on()`.
 
 ### Breaking API changes
 
@@ -105,6 +116,8 @@ v0.26
 
 * The `GIT_FILTER_INIT` macro and the `git_filter_init` function are provided
   to initialize a `git_filter` structure.
+
+### API removals
 
 ### Breaking API changes
 
