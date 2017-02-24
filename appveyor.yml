@@ -9,10 +9,10 @@ environment:
   GITTEST_INVASIVE_FS_SIZE: 1
 
   matrix:
-  - GENERATOR: "Visual Studio 11"
-    ARCH: 32
-  - GENERATOR: "Visual Studio 11 Win64"
-    ARCH: 64
+#  - GENERATOR: "Visual Studio 11"
+#    ARCH: 32
+#  - GENERATOR: "Visual Studio 11 Win64"
+#    ARCH: 64
   - GENERATOR: "MSYS Makefiles"
     ARCH: i686 # this is for 32-bit MinGW-w64
   - GENERATOR: "MSYS Makefiles"
