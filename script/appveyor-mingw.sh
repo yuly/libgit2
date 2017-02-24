@@ -18,6 +18,9 @@ else
   export PATH=`pwd`/mingw64:$PATH
   echo "PATH is: $PATH"
 fi
+ls -Flas `pwd`/mingw32
+ls -Flas `pwd`/mingw64
+which gcc
 gcc --version
 cmake --version
 cd build
