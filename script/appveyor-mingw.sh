@@ -8,6 +8,7 @@ if [ "$ARCH" = "i686" ]; then
   fi
   7z x $f > /dev/null
   export PATH=`pwd`/mingw32:$PATH
+  echo "PATH is: $PATH"
 else
   f=x86_64-4.9.2-release-win32-seh-rt_v3-rev1.7z
   if ! [ -e $f ]; then
@@ -15,7 +16,10 @@ else
   fi
   7z x $f > /dev/null
   export PATH=`pwd`/mingw64:$PATH
+  echo "PATH is: $PATH"
 fi
+gcc --version
+cmake --version
 cd build
 cmake -D ENABLE_TRACE=ON -D BUILD_CLAR=ON .. -G"$GENERATOR"
 cmake --build . --config RelWithDebInfo
