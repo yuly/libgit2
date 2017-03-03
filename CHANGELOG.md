@@ -7,7 +7,29 @@ v0.25 + 1
   This aligns this structure with the default by `git_merge` and
   `git_merge_trees` when `NULL` was provided for the options.
 
+* Proxy environment variables can now be specified in lower case.  For
+  example, `http_proxy`, as well as `HTTP_PROXY`.
+
+* Multiple worktrees are now supported.
+
+* SHA-1 collision detection attacks will be detected when libgit2 is
+  configured with `-DUSE_SHA1DC`.
+
+* When a commit is created, its tree object will be refreshed in the object
+  database, which can help prevent some race conditions with garbage
+  collection.
+
 ### API additions
+
+* The `GIT_OPT_ENABLE_SYMBOLIC_REF_TARGET_VALIDATION` option will disable
+  validation of the target of a symbolic reference.
+
+* `git_treebuilder_write_with_buffer` allows callers to keep a single buffer
+  throughout multiple treebuilder calls for allocation efficiency.
+
+* `git_repository_submodule_cache_all` can be used to setup a cache of
+  submodules, for a speedup of some functions affecting submodules that
+  are called in a batch.
 
 ### API removals
 
