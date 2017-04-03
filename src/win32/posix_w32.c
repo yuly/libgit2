@@ -212,16 +212,40 @@ int p_lstat_posixly(const char *filename, struct stat *buf)
 	return do_lstat(filename, buf, true);
 }
 
-int p_utimes(const char *filename, const struct p_timeval times[2])
+int p_utimes(const char *path, const struct p_timeval times[2])
 {
+	git_win32_path wpath;
 	int fd, error;
+	DWORD attrs_orig, attrs_new = 0;
 
-	if ((fd = p_open(filename, O_RDWR)) < 0)
-		return fd;
+	if (git_win32_path_from_utf8(wpath, path) < 0)
+		return -1;
+
+	attrs_orig = GetFileAttributesW(wpath);
+
+	if (attrs_orig & FILE_ATTRIBUTE_READONLY) {
+		attrs_new = attrs_orig & ~FILE_ATTRIBUTE_READONLY;
+
+		if (!SetFileAttributesW(wpath, attrs_new)) {
+			giterr_set(GITERR_OS, "failed to set attributes");
+			return -1;
+		}
+	}
+
+	/* TODO: CreateFile */
+	if ((error = fd = p_open(path, O_RDWR)) < 0)
+		goto done;
 
 	error = p_futimes(fd, times);
-
 	close(fd);
+
+done:
+	if (attrs_orig != attrs_new) {
+		DWORD os_error = GetLastError();
+		SetFileAttributesW(wpath, attrs_orig);
+		SetLastError(os_error);
+	}
+
 	return error;
 }
 
@@ -605,7 +629,7 @@ static int ensure_writable(wchar_t *fpath)
 		return -1;
 	}
 
-	return 0;
+	return 1;
 }
 
 int p_rename(const char *from, const char *to)
