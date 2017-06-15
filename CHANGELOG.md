@@ -9,6 +9,8 @@ v0.26 + 1
 
 ### Breaking API changes
 
+$his is a test!
+
 v0.26
 -----
 
